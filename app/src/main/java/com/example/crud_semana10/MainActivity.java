@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     EditText cod, nombre, direccion, ubicacion;
-    Button ins, up, list;
+    Button ins, update, list;
     DatabaseHandler DB;
 
     @Override
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         direccion=findViewById(R.id.direccion);
         ubicacion=findViewById(R.id.ubicacion);
         ins=findViewById(R.id.btInsert);
-        up=findViewById(R.id.btUpdate);
+        update=findViewById(R.id.btUpdate);
         list=findViewById(R.id.btList);
         DB=new DatabaseHandler(this);
 
@@ -59,7 +59,7 @@ list.setOnClickListener(new View.OnClickListener() {
             buffer.append("Codigo: "+result.getString(0)+"\n");
             buffer.append("Nombre: "+result.getString(1)+"\n");
             buffer.append("Direccion: "+result.getString(2)+"\n");
-            buffer.append("Ubicacion: "+result.getString(2)+"\n\n");
+            buffer.append("Ubicacion: "+result.getString(3)+"\n\n");
 
         }
         AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
@@ -69,17 +69,19 @@ list.setOnClickListener(new View.OnClickListener() {
         builder.show();
     }
 });
-up.setOnClickListener(new View.OnClickListener() {
+update.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        String codTiendaTEXT=cod.getText().toString();
-        String nombreTEXT=nombre.getText().toString();
-        String direccionTEXT=direccion.getText().toString();
-        String ubicacionTEXT=ubicacion.getText().toString();
-        Boolean checkInsert=DB.updateData(codTiendaTEXT,nombreTEXT,ubicacionTEXT,direccionTEXT);
 
+        String codTiendaTXT = cod.getText().toString();
+        String nombreTXT = nombre.getText().toString();
+        String direccionTXT = direccion.getText().toString();
+        String ubicacionTXT = ubicacion.getText().toString();
+
+        Boolean checkInsert = DB.updateData(codTiendaTXT, nombreTXT, direccionTXT, ubicacionTXT);
         if(checkInsert==true){
             Toast.makeText(MainActivity.this,"Su dato se actualizo",Toast.LENGTH_LONG).show();
+
         }else{
             Toast.makeText(MainActivity.this,"Su dato no se actualizo",Toast.LENGTH_LONG).show();
 

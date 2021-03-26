@@ -43,24 +43,25 @@ db.execSQL("DROP TABLE IF EXISTS tienda");
         Cursor cursor=db.rawQuery("SELECT*FROM tienda",null);
         return cursor;
     }
-    public Boolean updateData(String codTienda, String nombre, String ubicacion, String direccion){
-        SQLiteDatabase db=this.getWritableDatabase();
-        ContentValues contentValues= new ContentValues();
+    public Boolean updateData(String codTienda, String nombre, String direccion, String ubicacion){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
         contentValues.put("codTienda", codTienda);
         contentValues.put("nombre", nombre);
         contentValues.put("direccion", direccion);
-        contentValues.put("ubicacion", ubicacion);
+contentValues.put("ubicacion", ubicacion);
 
-        //registro actualizar
-        Cursor cursor=db.rawQuery("SELECT * FROM persona WHERE codTienda=?", new String[]{codTienda});
 
-        if(cursor.getCount()>0) {
-            long result = db.update("persona", contentValues, "codTienda=?", new String[]{codTienda});
-            if (result == -1) {
+        //busqueda del registro a actualizar
+        Cursor cursor = db.rawQuery("SELECT * FROM tienda WHERE codTienda=?", new String[]{codTienda});
+
+        //evaluar si el registro existe
+        if(cursor.getCount()>0){
+            long result = db.update("tienda", contentValues, "codTienda=?", new String[]{codTienda});
+            if(result==-1){
                 return false;
-
-            } else {
-                return true;
+            }else{
+                return  true;
             }
         }else{
             return false;
